@@ -9,6 +9,16 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type Response struct {
+	SlackName     string    `json:"slack_name"`
+	CurrentDay    string    `json:"current_day"`
+	UTCTime       time.Time `json:"utc_time"`
+	Track         string    `json:"track"`
+	GithubFileURL string    `json:"github_file_url"`
+	GithubRepoURL string    `json:"github_repo_url"`
+	StatusCode    int       `json:"status_code"`
+}
+
 func getInformation(w http.ResponseWriter, r *http.Request) {
 	//query parameters
 	params := r.URL.Query()
@@ -30,14 +40,14 @@ func getInformation(w http.ResponseWriter, r *http.Request) {
 	githubRepo := "your_github_repo_url"
 
 	// JSON response
-	resp := map[string]interface{}{
-		"slack_name":      slackName,
-		"current_day":     currentDay,
-		"utc_time":        currentTime,
-		"track":           track,
-		"github_file_url": githubFile,
-		"github_repo_url": githubRepo,
-		"status_code":     http.StatusOK,
+	resp := Response{
+		SlackName:     slackName,
+		CurrentDay:    currentDay,
+		UTCTime:       currentTime,
+		Track:         track,
+		GithubFileURL: githubFile,
+		GithubRepoURL: githubRepo,
+		StatusCode:    200,
 	}
 
 	jsonResp, err := json.Marshal(resp)
