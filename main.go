@@ -10,13 +10,13 @@ import (
 )
 
 type Response struct {
-	SlackName     string    `json:"slack_name"`
-	CurrentDay    string    `json:"current_day"`
-	UTCTime       time.Time `json:"utc_time"`
-	Track         string    `json:"track"`
-	GithubFileURL string    `json:"github_file_url"`
-	GithubRepoURL string    `json:"github_repo_url"`
-	StatusCode    int       `json:"status_code"`
+	SlackName     string `json:"slack_name"`
+	CurrentDay    string `json:"current_day"`
+	UTCTime       string `json:"utc_time"`
+	Track         string `json:"track"`
+	GithubFileURL string `json:"github_file_url"`
+	GithubRepoURL string `json:"github_repo_url"`
+	StatusCode    int    `json:"status_code"`
 }
 
 func getInformation(w http.ResponseWriter, r *http.Request) {
@@ -30,6 +30,7 @@ func getInformation(w http.ResponseWriter, r *http.Request) {
 
 	//current UTC time
 	currentTime := time.Now().UTC()
+	strCurrentTime := currentTime.Format("2006-01-02T15:04:05Z")
 	timeDifference := time.Until(currentTime)
 	if timeDifference.Minutes() > 2 || timeDifference.Minutes() < -2 {
 		http.Error(w, "Invalid Time", http.StatusBadRequest)
@@ -43,7 +44,7 @@ func getInformation(w http.ResponseWriter, r *http.Request) {
 	resp := Response{
 		SlackName:     slackName,
 		CurrentDay:    currentDay,
-		UTCTime:       currentTime,
+		UTCTime:       strCurrentTime,
 		Track:         track,
 		GithubFileURL: githubFile,
 		GithubRepoURL: githubRepo,
