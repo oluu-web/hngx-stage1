@@ -36,8 +36,8 @@ func getInformation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	githubFile := "your_github_file_url"
-	githubRepo := "your_github_repo_url"
+	githubFile := "https://github.com/oluu-web/hngx-stage1/blob/main/main.go"
+	githubRepo := "https://github.com/oluu-web/hngx-stage1"
 
 	// JSON response
 	resp := Response{
